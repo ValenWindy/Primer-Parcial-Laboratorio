@@ -1,0 +1,23 @@
+{
+    "Nombre del archivo": "Majin_Regeneración.json",
+    "Datos": [
+        {
+            "Nombre": "Majin Buu",
+            "Poder de ataque": 4800,
+            "Habilidades": [
+                "Regeneración ",
+                "Ataque de chocolate ",
+                "Barrera mágica"
+            ]
+        },
+        {
+            "Nombre": "Super Buu",
+            "Poder de ataque": 6800,
+            "Habilidades": [
+                "Regeneración ",
+                "Ataque de chocolate ",
+                "Barrera mágica"
+            ]
+        }
+    ]
+}

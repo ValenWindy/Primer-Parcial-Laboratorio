@@ -1,0 +1,50 @@
+{
+    "Nombre del archivo": "Saiyan_Super_Saiyan.json",
+    "Datos": [
+        {
+            "Nombre": "Goten",
+            "Poder de ataque": 2800,
+            "Habilidades": [
+                "Super Saiyan ",
+                "Kamehameha ",
+                "Tambor del Trueno"
+            ]
+        },
+        {
+            "Nombre": "Gotenks",
+            "Poder de ataque": 7500,
+            "Habilidades": [
+                "Super Ghost Kamikaze Attack ",
+                "Ataque rugiente ",
+                "Super Saiyan 3"
+            ]
+        },
+        {
+            "Nombre": "Trunks",
+            "Poder de ataque": 5200,
+            "Habilidades": [
+                "Super Saiyan ",
+                "Espada de energía ",
+                "Ataque del futuro"
+            ]
+        },
+        {
+            "Nombre": "Trunks del futuro",
+            "Poder de ataque": 5000,
+            "Habilidades": [
+                "Super Saiyan 2 ",
+                "Espada del juicio ",
+                "Ataque del dragón"
+            ]
+        },
+        {
+            "Nombre": "Goku",
+            "Poder de ataque": 10000,
+            "Habilidades": [
+                "Kamehameha",
+                "Genki Dama",
+                "Super Saiyan"
+            ]
+        }
+    ]
+}
