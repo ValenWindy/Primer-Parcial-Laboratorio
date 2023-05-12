@@ -1,0 +1,5 @@
+id,nombre,raza,poder_pelea,poder_ataque,habilidades
+2,Broly,Saiyan,3000000.0,510000.0,"['Gigantic Meteor ', 'Omega Blaster', 'Transformación nivel dios']"
+19,Gotenks,Saiyan,12000.0,12750.0,"['Super Ghost Kamikaze Attack ', 'Ataque rugiente ', 'Super Saiyan 3', 'Transformación nivel dios']"
+31,Trunks del futuro,Saiyan,7200.0,8500.0,"['Super Saiyan 2 ', 'Espada del juicio ', 'Ataque del dragón', 'Transformación nivel dios']"
+35,Goku,Saiyan,750000.0,17000.0,"['Kamehameha', 'Genki Dama', 'Super Saiyan', 'Transformación nivel dios']"

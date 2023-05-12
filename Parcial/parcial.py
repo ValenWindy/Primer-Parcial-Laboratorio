@@ -9,8 +9,7 @@ from datetime import datetime
 # Función para cargar los datos desde el archivo CSV
 def cargar_personajes() -> tuple:
     with open("Parcial\DBZ.csv", newline='', encoding='utf-8') as archivo:
-        lector_csv = csv.reader(archivo, delimiter=',', quotechar='"')
-        next(lector_csv)  
+        lector_csv = csv.reader(archivo, delimiter=',', quotechar='"') 
         personajes = []
         razas = set()
         habilidades = set()
@@ -96,7 +95,6 @@ def listar_personajes_por_habilidad(personajes: list) -> list:
 def jugar_batalla(personajes: list) -> None:
 
     def seleccionar_personaje(personajes: list) -> dict:
-       
         print("Selecciona tu personaje para la batalla:")
         for i, personaje in enumerate(personajes):
             print(f"{i+1}. {personaje['nombre']}")
@@ -217,6 +215,27 @@ def leer_json(nombre_archivo: str) -> None:
     except json.JSONDecodeError:
         print("El archivo JSON está mal formado.")
 
+# Agregar una opción que permita otorgarle un 50% más de poder de pelea y un 70% más de poder de ataque a los Saiyan, y agregaran a sus habilidades la “transformación nivel dios”.
+# Guardar en un archivo CSV los personajes que hayan recibido esta actualización.
+
+def actualizar_y_guardar_personajes(personajes):
+    personajes_actualizados = []
+    for personaje in personajes:
+        if personaje["raza"] == "Saiyan":
+            personaje["poder_pelea"] *= 1.5
+            personaje["poder_ataque"] *= 1.7
+            personaje["habilidades"].append("Transformación nivel dios")
+            personajes_actualizados.append(personaje)
+    
+    if personajes_actualizados:
+        with open('personajes_actualizados.csv', 'w', newline='') as file:
+            fieldnames = ["id", "nombre", "raza", "poder_pelea", "poder_ataque", "habilidades"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(personajes_actualizados)
+        
+        print("Personajes actualizados guardados en el archivo personajes_actualizados.csv")   
+
 # Menú principal del programa
 def menu():
     
@@ -230,7 +249,8 @@ def menu():
         print('5. Jugar batalla')
         print('6. Guardar Json')
         print('7. Leer Json')
-        print('8. Salir del programa')
+        print('8. Aumentar poderes')
+        print('9. Salir del programa')
         opcion = int(input('Ingrese una opción: '))
         match opcion:
             case 1:
@@ -250,9 +270,13 @@ def menu():
                 nombre_archivo = input("Ingrese el nombre del archivo JSON: ")
                 leer_json(nombre_archivo)
             case 8:
+                actualizar_y_guardar_personajes(personajes)
+            case 9:
                 print("¡Adios!")
                 break
             case _:
                 print("Opcion invalida")
 
 menu()
+
+
