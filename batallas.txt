@@ -9,3 +9,6 @@
 2023-05-11 14:08:53 - Ganador: Androide 18 - Perdedor: Androide 18
 2023-05-11 14:09:17 - Ganador: Goku - Perdedor: Hit
 2023-05-11 14:09:41 - Ganador: Cooler - Perdedor: Yamu
+2023-05-12 11:41:26 - Ganador: Piccolo - Perdedor: Goten
+2023-05-14 12:07:06 - Ganador: Cooler - Perdedor: Yamu
+2023-05-14 12:09:40 - Ganador: Goku - Perdedor: Androide 17

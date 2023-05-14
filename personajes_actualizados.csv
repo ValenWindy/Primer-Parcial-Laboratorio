@@ -1,5 +1,4 @@
-id,nombre,raza,poder_pelea,poder_ataque,habilidades
-2,Broly,Saiyan,3000000.0,510000.0,"['Gigantic Meteor ', 'Omega Blaster', 'Transformaci髇 nivel dios']"
-19,Gotenks,Saiyan,12000.0,12750.0,"['Super Ghost Kamikaze Attack ', 'Ataque rugiente ', 'Super Saiyan 3', 'Transformaci髇 nivel dios']"
-31,Trunks del futuro,Saiyan,7200.0,8500.0,"['Super Saiyan 2 ', 'Espada del juicio ', 'Ataque del drag髇', 'Transformaci髇 nivel dios']"
-35,Goku,Saiyan,750000.0,17000.0,"['Kamehameha', 'Genki Dama', 'Super Saiyan', 'Transformaci髇 nivel dios']"
+2,Broly,Saiyan,3000000.0,510000.0,"['Gigantic Meteor ', 'Omega Blaster', 'Transformaci贸n nivel dios']"
+19,Gotenks,Saiyan,12000.0,12750.0,"['Super Ghost Kamikaze Attack ', 'Ataque rugiente ', 'Super Saiyan 3', 'Transformaci贸n nivel dios']"
+31,Trunks del futuro,Saiyan,7200.0,8500.0,"['Super Saiyan 2 ', 'Espada del juicio ', 'Ataque del drag贸n', 'Transformaci贸n nivel dios']"
+35,Goku,Saiyan,750000.0,17000.0,"['Kamehameha', 'Genki Dama', 'Super Saiyan', 'Transformaci贸n nivel dios']"

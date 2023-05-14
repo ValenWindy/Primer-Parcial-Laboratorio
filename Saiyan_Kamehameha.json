@@ -1,0 +1,23 @@
+{
+    "Nombre del archivo": "Saiyan_Kamehameha.json",
+    "Datos": [
+        {
+            "Nombre": "Goten",
+            "Poder de ataque": 2800,
+            "Habilidades": [
+                "Super Saiyan ",
+                "Kamehameha ",
+                "Tambor del Trueno"
+            ]
+        },
+        {
+            "Nombre": "Goku",
+            "Poder de ataque": 10000,
+            "Habilidades": [
+                "Kamehameha",
+                "Genki Dama",
+                "Super Saiyan"
+            ]
+        }
+    ]
+}
