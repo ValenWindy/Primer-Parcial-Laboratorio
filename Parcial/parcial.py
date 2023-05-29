@@ -6,9 +6,15 @@ import unicodedata
 import random
 from datetime import datetime 
 
+# Variables globales
+personajes = []
+razas = set()
+habilidades = set()
+
 # Función para cargar los datos desde el archivo CSV
-def cargar_personajes() -> tuple:
-    with open("Parcial\DBZ.csv", newline='', encoding='utf-8') as archivo:
+def cargar_personajes() -> None:
+    global personajes, razas, habilidades
+    with open("DBZ.csv", newline='', encoding='utf-8') as archivo:
         lector_csv = csv.reader(archivo,) 
         personajes = []
         razas = set()
@@ -26,7 +32,6 @@ def cargar_personajes() -> tuple:
             })
             razas.add(raza)
             habilidades.update(habilidades_list)
-        return personajes, razas, habilidades
 
 # Funciones para Sanitizar y Normalizar datos
 
@@ -44,18 +49,14 @@ def limpiar_habilidad(habilidad: str) -> str:
     habilidad_limpia = habilidad_limpia.strip().replace(' ', '_')
     return habilidad_limpia
 
-# Función para listar la cantidad de personajes por raza
-def listar_cantidad_por_raza(personajes: list, razas: str) -> str:
-    
+# Función para listar la cantidad de personajes por raza y los personajes por raza
+def listar_cantidad_y_personajes_por_raza(personajes: list, razas: set) -> None:
     print('Cantidad de personajes por raza:')
     for raza in razas:
         cantidad = sum(1 for personaje in personajes if personaje['raza'] == raza)
         print(f'- {raza}: {cantidad}')
-
-# Función para listar los personajes por raza
-def listar_personajes_por_raza(personajes: list) -> None:
-    razas = set([personaje['raza'] for personaje in personajes])
-
+    
+    print('\nPersonajes por raza:')
     for raza in razas:
         print(f'{raza.upper()}:')
         personajes_raza = [p for p in personajes if re.search(fr"{raza}(-Humano)?", p['raza'])]
@@ -124,11 +125,9 @@ def combate_personajes(personajes: list) -> None:
     print(f"Perdedor: {perdedor['nombre']}")
 
 # Función para guardar el JSON
-
-
-def guardar_personajes_json(personajes: list) -> None:    
+def guardar_personajes_json(personajes: list) -> None:
     raza = input("Ingrese la raza: ")
-    habilidad = input("Ingrese la habilidad: ")    
+    habilidad = input("Ingrese la habilidad: ")
 
     personajes_filtrados = []
     habilidades_no_buscadas = []
@@ -138,42 +137,42 @@ def guardar_personajes_json(personajes: list) -> None:
     for personaje in personajes:
         if raza_pattern.search(personaje['raza']):
             habilidades_personaje = personaje['habilidades']
-            if any(habilidad_pattern.search(hab) for hab in habilidades_personaje):
-                personajes_filtrados.append(personaje)
+            if habilidad_pattern.search(habilidad):
+                habilidades_personaje = [hab for hab in habilidades_personaje if not habilidad_pattern.search(hab)]
+                personajes_filtrados.append({
+                    "Nombre": personaje['nombre'],
+                    "Poder de ataque": personaje['poder_ataque'],
+                    "Habilidades": habilidades_personaje
+                })
             else:
-                habilidades_no_buscadas.extend([hab for hab in habilidades_personaje if not habilidad_pattern.search(hab)])
+                habilidades_no_buscadas.extend([hab for hab in habilidades_personaje])
+
     habilidades_no_buscadas = list(set(habilidades_no_buscadas))
+
+    if len(personajes_filtrados) == 0:
+        print("No se encontraron personajes que cumplan con los criterios de búsqueda.")
+        return
 
     nombre_archivo = f"{raza.replace(' ', '_')}_{habilidad.replace(' ', '_')}.json"
 
     with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
         datos_json = {
             "Nombre del archivo": nombre_archivo,
-            "Datos": []
+            "Datos": personajes_filtrados
         }
-        for personaje in personajes_filtrados:
-            nombre = personaje['nombre']
-            poder_ataque = personaje['poder_ataque']
-            habilidades = personaje['habilidades']
-            datos_json["Datos"].append({
-                "Nombre": nombre,
-                "Poder de ataque": poder_ataque,
-                "Habilidades": habilidades
-            })
         json.dump(datos_json, archivo, indent=4, ensure_ascii=False)
 
     print(f"Nombre del archivo: {nombre_archivo}")
     print("Datos:")
 
     for personaje in personajes_filtrados:
-        nombre = personaje['nombre']
-        poder_ataque = personaje['poder_ataque']
-        habilidades = ' + '.join(personaje['habilidades'])
+        nombre = personaje['Nombre']
+        poder_ataque = personaje['Poder de ataque']
+        habilidades = ' + '.join(personaje['Habilidades'])
         print(f"{nombre} - {poder_ataque} - {habilidades}")
 
     print("Habilidades no buscadas:")
     print('\n'.join(habilidades_no_buscadas))
-
 
 # Función para leer el JSON
 
@@ -232,40 +231,34 @@ def actualizar_saiyan(personajes):
 
 # Menú principal del programa
 def menu():
-    
+    cargar_personajes()
+    print('¡Bienvenido al menu de Dragon Ball Z!')
     opcion = 0
     while opcion != 8:
         print('--- MENÚ ---')
-        print('1. Traer datos desde archivo')
-        print('2. Listar cantidad por raza')
-        print('3. Listar personajes por raza')
-        print('4. Listar personajes por habilidad')
-        print('5. Jugar batalla')
-        print('6. Guardar Json')
-        print('7. Leer Json')
-        print('8. Aumentar poderes')
-        print('9. Salir del programa')
+        print('1. Listar cantidad y personajes por raza')
+        print('2. Listar personajes por habilidad')
+        print('3. Jugar batalla')
+        print('4. Guardar Json')
+        print('5. Leer Json')
+        print('6. Aumentar poderes')
+        print('7. Salir del programa')
         opcion = int(input('Ingrese una opción: '))
         match opcion:
             case 1:
-                personajes, razas, habilidades = cargar_personajes()
-                print('Se cargaron los datos correctamente.')
+                listar_cantidad_y_personajes_por_raza(personajes, razas)
             case 2:
-                listar_cantidad_por_raza(personajes, razas)
-            case 3:
-                listar_personajes_por_raza(personajes)
-            case 4:
                 listar_personajes_por_habilidad(personajes)
-            case 5:
+            case 3:
                 combate_personajes(personajes)
-            case 6:
+            case 4:
                 guardar_personajes_json(personajes)
-            case 7:
+            case 5:
                 nombre_archivo = input("Ingrese el nombre del archivo JSON: ")
                 leer_json(nombre_archivo)
-            case 8:
+            case 6:
                 actualizar_saiyan(personajes)
-            case 9:
+            case 7:
                 print("¡Adios!")
                 break
             case _:
