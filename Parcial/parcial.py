@@ -84,7 +84,7 @@ def listar_personajes_por_habilidad(personajes: list) -> None:
     for resultado in resultados:
         print(f"Nombre: {resultado['nombre']}, Raza: {resultado['raza']}, Promedio de poder: {resultado['promedio_poder']}")
         
-# Función para el compate
+# Función para el combate
 def combate_personajes(personajes: list) -> None:
 
     def seleccionar_personaje(personajes: list) -> dict:
@@ -126,34 +126,32 @@ def combate_personajes(personajes: list) -> None:
 
 # Función para guardar el JSON
 def guardar_personajes_json(personajes: list) -> None:
-    raza = input("Ingrese la raza: ")
-    habilidad = input("Ingrese la habilidad: ")
+    raza = input("Ingrese la raza: ").lower()
+    habilidad = input("Ingrese la habilidad: ").lower()
 
     personajes_filtrados = []
-    habilidades_no_buscadas = []
+    habilidades_no_buscadas = set()
 
-    raza_pattern = re.compile(fr"\b{re.escape(raza)}\b", re.IGNORECASE)
-    habilidad_pattern = re.compile(fr"\b{re.escape(habilidad)}\b", re.IGNORECASE)
     for personaje in personajes:
-        if raza_pattern.search(personaje['raza']):
-            habilidades_personaje = personaje['habilidades']
-            if habilidad_pattern.search(habilidad):
-                habilidades_personaje = [hab for hab in habilidades_personaje if not habilidad_pattern.search(hab)]
+        if raza in personaje['raza'].lower():
+            habilidades_personaje = [hab.lower() for hab in personaje['habilidades']]
+            if any(habilidad in habilidades_personaje for habilidad in habilidades_personaje):
+                habilidades_personaje = [hab for hab in habilidades_personaje if habilidad not in hab]
                 personajes_filtrados.append({
                     "Nombre": personaje['nombre'],
                     "Poder de ataque": personaje['poder_ataque'],
                     "Habilidades": habilidades_personaje
                 })
             else:
-                habilidades_no_buscadas.extend([hab for hab in habilidades_personaje])
+                habilidades_no_buscadas.update(personaje['habilidades'])
 
-    habilidades_no_buscadas = list(set(habilidades_no_buscadas))
+    habilidades_no_buscadas = list(habilidades_no_buscadas)
 
     if len(personajes_filtrados) == 0:
         print("No se encontraron personajes que cumplan con los criterios de búsqueda.")
         return
 
-    nombre_archivo = f"{raza.replace(' ', '_')}_{habilidad.replace(' ', '_')}.json"
+    nombre_archivo = f"{limpiar_nombre(raza)}_{limpiar_habilidad(habilidad)}.json"
 
     with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
         datos_json = {
@@ -207,6 +205,7 @@ def leer_json(nombre_archivo: str) -> None:
             print("El archivo JSON está mal formado.")
 
 
+# Funcion para Actualizar los Saiyan
 def actualizar_saiyan(personajes):
     personajes_actualizados = [
         {
@@ -229,12 +228,60 @@ def actualizar_saiyan(personajes):
         
         print("Personajes actualizados guardados en el archivo personajes_actualizados.csv")
 
+# Función para ordenar personajes por atributo
+
+def ordenar_personajes_por_atributo(atributo, orden):
+    lista_ordenada = sorted(personajes, key=lambda x: sorted(list(x[atributo])) if isinstance(x[atributo], set) else x[atributo], reverse=not orden)
+    for personaje in lista_ordenada:
+        print(f"- Nombre: {personaje['nombre']}")
+        print(f"  Raza: {personaje['raza']}")
+        print(f"  Poder de pelea: {personaje['poder_pelea']}")
+        print(f"  Poder de ataque: {personaje['poder_ataque']}")
+        print(f"  Habilidades: {', '.join(personaje['habilidades'])}")
+        print()  # Salto de línea entre personajes
+    return lista_ordenada
+
+
+# Función para generar código Pokemón
+
+def generar_codigo_pokemon(personajes: list) -> str:
+    def seleccionar_personaje_pokemon(personajes: list) -> dict:
+        print("Selecciona tu personaje:")
+        for i, personaje in enumerate(personajes):
+            print(f"{i+1}. {personaje['nombre']}")
+        while True:
+            opcion = input("Ingresa el número correspondiente al personaje: ")
+            if opcion.isdigit() and 1 <= int(opcion) <= len(personajes):
+                return personajes[int(opcion) - 1]
+            else:
+                print("Opción inválida. Ingresa un número válido.")
+                
+    personaje = seleccionar_personaje_pokemon(personajes)
+    
+    nombre = personaje["nombre"]
+    poder_pelea = personaje["poder_pelea"]
+    poder_ataque = personaje["poder_ataque"]
+    id_personaje = str(personaje["id"]).zfill(9)
+
+    inicial_nombre = nombre[0].upper()
+    if poder_pelea > poder_ataque:
+        ganador = "A"
+    elif poder_ataque > poder_pelea:
+        ganador = "D"
+    else:
+        ganador = "AD"
+
+    valor_mas_alto = max(poder_ataque, poder_pelea)
+
+    codigo_pokemon = f"{inicial_nombre}-{ganador}-{valor_mas_alto}-{id_personaje}"
+    print("¡Has generado tu código Pokémon!")
+    print(codigo_pokemon)
 # Menú principal del programa
 def menu():
     cargar_personajes()
     print('¡Bienvenido al menu de Dragon Ball Z!')
     opcion = 0
-    while opcion != 8:
+    while opcion != 9:
         print('--- MENÚ ---')
         print('1. Listar cantidad y personajes por raza')
         print('2. Listar personajes por habilidad')
@@ -242,7 +289,9 @@ def menu():
         print('4. Guardar Json')
         print('5. Leer Json')
         print('6. Aumentar poderes')
-        print('7. Salir del programa')
+        print('7. Ordenar personajes por Atributo')
+        print('8. Generar el Código Pokemon')
+        print('9. Salir del programa')
         opcion = int(input('Ingrese una opción: '))
         match opcion:
             case 1:
@@ -259,6 +308,12 @@ def menu():
             case 6:
                 actualizar_saiyan(personajes)
             case 7:
+                atributo = input("Ingrese el nombre del atributo: ")
+                orden = True  
+                ordenar_personajes_por_atributo(atributo, orden)
+            case 8:
+                generar_codigo_pokemon(personajes)
+            case 9:
                 print("¡Adios!")
                 break
             case _:
