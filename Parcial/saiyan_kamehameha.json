@@ -1,0 +1,65 @@
+{
+    "Nombre del archivo": "saiyan_kamehameha.json",
+    "Datos": [
+        {
+            "Nombre": "Broly",
+            "Poder de ataque": 300000,
+            "Habilidades": [
+                "gigantic meteor ",
+                "omega blaster"
+            ]
+        },
+        {
+            "Nombre": "Gohan",
+            "Poder de ataque": 5900,
+            "Habilidades": [
+                "magia de control mental ",
+                "invocación de majin buu ",
+                "magia oscura"
+            ]
+        },
+        {
+            "Nombre": "Goten",
+            "Poder de ataque": 2800,
+            "Habilidades": [
+                "super saiyan ",
+                "tambor del trueno"
+            ]
+        },
+        {
+            "Nombre": "Gotenks",
+            "Poder de ataque": 7500,
+            "Habilidades": [
+                "super ghost kamikaze attack ",
+                "ataque rugiente ",
+                "super saiyan 3"
+            ]
+        },
+        {
+            "Nombre": "Trunks",
+            "Poder de ataque": 5200,
+            "Habilidades": [
+                "super saiyan ",
+                "espada de energía ",
+                "ataque del futuro"
+            ]
+        },
+        {
+            "Nombre": "Trunks del futuro",
+            "Poder de ataque": 5000,
+            "Habilidades": [
+                "super saiyan 2 ",
+                "espada del juicio ",
+                "ataque del dragón"
+            ]
+        },
+        {
+            "Nombre": "Goku",
+            "Poder de ataque": 10000,
+            "Habilidades": [
+                "genki dama",
+                "super saiyan"
+            ]
+        }
+    ]
+}
